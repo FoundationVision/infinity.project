@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+    <!-- Replace the content tag with appropriate information -->
+    <!-- <meta name="description" content="DESCRIPTION META TAG"> -->
+    <meta property="og:title"
+        content="Infinity&infin;: Scaling Bitwise AutoRegressive Modeling for High-Resolution Image Synthesis" />
+    <!-- <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG" /> -->
+    <meta property="og:url" content="https://pixart-alpha.github.io/" />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+    <meta property="og:image" content="static/images/banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+
+    <!-- <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
+    <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG"> -->
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+    <!-- <meta name="twitter:image" content="static/images/your_twitter_banner_image.png"> -->
+    <!-- <meta name="twitter:card" content="summary_large_image"> -->
+    <!-- Keywords for your paper to be indexed by-->
+    <!-- <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>Infinity&infin;</title>
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/custom.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/index.js"></script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.1.1/gradio.js"></script>
+
+</head>
+
+<body>
+
+    <script>
+        // 定义一个函数来设置图片的缩放比例
+        function setScale(elementId, scale) {
+            document.getElementById(elementId).style.transform = "scale(" + scale + ")";
+        }
+
+        // 调用函数设置不同图片的缩放比例
+        setScale("image1", 0.4); // 图片1缩放40%
+        setScale("image2", 0.5); // 图片2缩放50%
+    </script>
+
+    <section class="hero banner">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title"></i>Infinity&infin;<br />Scaling Bitwise AutoRegressive Modeling for High-Resolution Image Synthesis</h1>
+                        <!-- <h1 class="title is-4 publication-title"> -->
+                            <!-- ICLR 2024 Spotlight</h1> -->
+                        <div class="is-size-5 publication-authors">
+                            <!-- Paper authors -->
+                            <span class="author-block">
+                                <a href="https://scholar.google.com/citations?user=H2DhYDoAAAAJ&hl=en&oi=sra" target="_blank">Jian Han</a><sup>*</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://scholar.google.com.hk/citations?user=PUI417QAAAAJ&hl=zh-CN&oi=ao" target="_blank">Jinlai Liu</a><sup>*</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://enjoyyi.github.io" target="_blank">Yi Jiang</a><sup>*</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://masterbin-iiau.github.io" target="_blank">Bin Yan</a>,</span>
+                            <span class="author-block">
+                                Yuqi Zhang</a>,</span>
+                            <span class="author-block">
+                                <a href="https://shallowyuan.github.io/" target="_blank">Zehuan Yuan</a><sup>†</sup>,</span>
+                            <span class="author-block">
+                                Bingyue Peng</a>,</span>
+                            <span class="author-block">
+                                Xiaobing Liu</a>,</span>
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">ByteDance</span>
+                            <span class="eql-cntrb"><small><br><sup>*</sup>Equal contribution.</small></span>
+                            <span class="eql-cntrb"><small><br><sup>†</sup><a
+                                        href="mailto:yuanzehuan@bytedance.com">Corresponding author.</a></small></span>
+                        </div>
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <a href="https://github.com/FoundationVision/Infinity" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                <!-- <span class="link-block">
+                                    <a href="https://huggingface.co/datasets/PixArt-alpha/SAM-LLaVA-Captions10M" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">🤗</span>
+                                        <span>SAM-LLaVA-Captions</span>
+                                    </a>
+                                </span> -->
+                                <!-- <span class="link-block">
+                                    <a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/pixart" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">🧨</span>
+                                        <span>Diffusers</span>
+                                    </a>
+                                </span> -->
+                                <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2412.04431" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv-Infinity&infin;</span>
+                                    </a>
+                                </span>
+                                <!-- <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2401.05252" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv-PixArt-δ</span>
+                                    </a>
+                                </span> -->
+                                <!-- <span class="link-block">
+                                    <a href="https://discord.gg/rde6eaE5Ta" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="fab fa-discord"></i>
+                                        </span>
+                                        <span>Discord</span>
+                                    </a>
+                                </span> -->
+                            </div>
+                        </div>
+                        <!-- <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <a href="https://huggingface.co/spaces/PixArt-alpha/PixArt-alpha" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">🤗</span>
+                                        <span>HF Demo: PixArt-α</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://huggingface.co/spaces/PixArt-alpha/PixArt-LCM" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">🤗</span>
+                                        <span>HF Demo: PixArt-LCM</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://openxlab.org.cn/apps/detail/PixArt-alpha/PixArt-alpha" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">X</span>
+                                        <span>OpenXLab Demo: PixArt-α</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://openxlab.org.cn/apps/detail/houshaowei/PixArt-LCM" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">X</span>
+                                        <span>OpenXLab Demo: PixArt-LCM</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://colab.research.google.com/drive/1jZ5UZXk7tcpTfVwnX33dDuefNMcnW9ME?usp=sharing" target="_blank"
+                                       class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="fab fa-google"></i>
+                                        </span>
+                                        <span>Colab Demo</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero is-small">
+        <div class="hero-body">
+            <!-- <div class="easycard-container grid-template-columns: repeat(4, 1fr);"> -->
+            <div class="easycard-container" style="grid-template-columns: repeat(4, 1fr);">
+                <!-- 1:1 Ratio Image -->
+                <div class="easycard" style="padding-top: 145%;">
+                    <div class="easyimage-wrapper" style="height: 72%;">
+                        <img src="static/images/carousel/图片1.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">Insect made from vintage 1960s electronic components. capacitors. resistors. transistors. wires. diodes. solder, circuitboard</div>
+                </div>
+                <!-- 1:2 Ratio Image: For aspect ratio change, padding-top will be different -->
+                <div class="easycard" style="padding-top: 145%;">
+                    <div class="easyimage-wrapper" style="height: 72%;">
+                        <img src="static/images/carousel/图片2.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">Denis Villeneuve's extreme macro cinematographic close-up in water</div>
+                </div>
+                <!-- 2:1 Ratio Image: For aspect ratio change, padding-top will be different -->
+                <div class="easycard" style="padding-top: 145%;">
+                    <div class="easyimage-wrapper" style="height: 72%;">
+                        <img src="static/images/carousel/图片3.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">close-up shot of a diecast toy car, diarama, night, lights from windows, bokeh, snow</div>
+                </div>
+                <!-- 1:3 Ratio Image: For aspect ratio change, padding-top will be different -->
+                <div class="easycard" style="padding-top: 145%;">
+                    <div class="easyimage-wrapper" style="height: 72%;">
+                        <img src="static/images/carousel/图片4.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">house: white: pink tinted windows: surrounded by flowers: cute: scenic: garden: fairy like: epic: photography: photorealistic: insanely detailed and intricate: textures: grain: ultra realistic</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="easycard-container" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="easycard" style="padding-top: 100%;">
+                    <div class="easyimage-wrapper" style="height: 81%;">
+                        <img src="static/images/carousel/图片5.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">Insect made from vintage 1960s electronic components. capacitors. resistors. transistors. wires. diodes. solder, circuitboard</div>
+                </div>
+                <div class="easycard" style="padding-top: 100%;">
+                    <div class="easyimage-wrapper" style="height: 81%;">
+                        <img src="static/images/carousel/图片6.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">Denis Villeneuve's extreme macro cinematographic close-up in water</div>
+                </div>
+                <div class="easycard" style="padding-top: 100%;">
+                    <div class="easyimage-wrapper" style="height: 81%;">
+                        <img src="static/images/carousel/图片7.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">close-up shot of a diecast toy car, diarama, night, lights from windows, bokeh, snow</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="easycard-container" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="easycard" style="padding-top: 100%;">
+                    <div class="easyimage-wrapper" style="height: 80%;">
+                        <img src="static/images/carousel/图片11.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">a young woman with glasses reading a thick book at a mahogany desk</div>
+                </div>
+                <div class="easycard" style="padding-top: 100%;">
+                    <div class="easyimage-wrapper" style="height: 80%;">
+                        <img src="static/images/carousel/图片10.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">a tiny astronaut hatching from an egg on the moon</div>
+                </div>
+                <div class="easycard" style="padding-top: 100%;">
+                    <div class="easyimage-wrapper" style="height: 80%;">
+                        <img src="static/images/carousel/图片12.png" alt="1:1比例">
+                    </div>
+                    <div class="easycaption">photorealistic closeup video of two pirate ships battling each other as they sail inside a cup of coffee</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+
+
+    <!-- Paper abstract -->
+    <section class="section hero is-light">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            We present Infinity, a Bitwise Visual AutoRegressive Modeling capable of generating high-resolution, photorealistic images following language instruction. Infinity redefines visual autoregressive model under a bitwise token prediction framework with an infinite-vocabulary tokenizer & classifier and bitwise self-correction mechanism, remarkably improving the generation capacity and details. By theoretically scaling the tokenizer vocabulary size to infinity and concurrently scaling the transformer size, our method significantly unleashes powerful scaling capabilities compared to vanilla VAR. Infinity sets a new record for autoregressive text-to-image models, outperforming top-tier diffusion models like SD3-Medium and SDXL. Notably, Infinity surpasses SD3-Medium by improving the GenEval benchmark score from 0.62 to 0.73 and the ImageReward benchmark score from 0.87 to 0.96, achieving a win rate of 66%. Without extra optimization, Infinity generates a high-quality 1024x1024 image in 0.8 seconds, making it 2.6x faster than SD3-Medium and establishing it as the fastest text-to-image model. Models and codes will be released to promote further exploration of Infinity for visual generation and unified tokenizer modeling.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End paper abstract -->
+    
+
+    <!-- <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-centered has-text-centered">
+                <h2 class="title is-3">Online Demo</h2>
+                <gradio-app src="https://pixart-alpha-pixart-alpha.hf.space" style="display: flex; justify-content: center;"></gradio-app>
+            </div>
+        </div>
+    </section> -->
+
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">Method</h2>
+                <p>Infinity introduces bitwise modeling, which incorporates a bitwise multi-scale visual tokenizer, 
+                    Infinite-Vocabulary Classifier (IVC), and Bitwise Self-Correction. When predicting R<sub>k</sub>, 
+                    the sequence (R<sub>1</sub>, R<sub>2</sub>, ..., R<sub>k-1</sub>) serves as the prefixed context and the text condition guides the prediction through 
+                    a cross attention mechanism. Different from VAR, Infinity performs next-scale prediction with bit labels.
+                </p>
+                <img loading="lazy" width='80%' src="static/images/method/framework.png" alt="efficiency" />
+
+                <p>Visual tokenizer quantizes continuous features and then gets index labels. Conventional classifier (left) predicts 2<sup>d</sup> indices. 
+                    Infinite-Vocabulary Classifier (right) predicts d bits instead. Slight perturbations to near-zero values in continuous features 
+                    cause a complete change of index labels. Bit labels (i.e. quantized features) change subtly and still provide steady supervision. 
+                    Besides, parameters of conventional classifiers grow exponentially as d increases, while IVC grows linearly. If d = 32 and h = 2048, 
+                    the conventional classifier requires 8.8 trillion parameters, exceeding current compute limits. By contrast, IVC only requires 0.13M 
+                    parameters.
+                </p>
+                <img loading="lazy" width='80%' src="static/images/method/ivc.png" alt="efficiency" />
+
+                <p>Weakness of teacher-forcing training. VAR inherits the teacher-forcing training from LLMs. However, next-scale prediction 
+                    in vision is quite different from next-token prediction in language. Specifically, we cannot decode the complete image until 
+                    residuals R<sub>k</sub> from all scales are obtained. We find that the teacher-forcing training brings about severe train-test discrepancy 
+                    for visual generation. In particular, the teacher-forcing training makes the transformer only refine features in each scale 
+                    without the ability to recognize and correct mistakes. Mistakes made in former scales will be propagated and amplified in latter 
+                    scales, finally messing up generated images (left images in Fig.12).
+                </p>
+
+                <p> In this work, we propose Bitwise Self-Correction (BSC) 
+                    to address this issue. In particular, we obtain Rf lip k via randomly flipping the bits in Rk with a probability uniformly 
+                    sampled from [0, p], imitating different strengths of errors made in the prediction of the k-th scale. Here comes the key 
+                    component of bitwise self-correction. Rflip k contains errors while Rk doesn’t. After replacing Rk with Rflip k as predictions 
+                    on the k-th scale, we recompute the transformer input e Fk. Besides, re-quantization is performed to get a new target Rk+1. 
+                    The whole process of bitwise self-correction is illustrated in Alg.2. We also provide a simplified illustration in Fig.3 
+                    (right) for better understanding. Notably, BSC is accomplished by revising the inputs and labels of the transformer. 
+                    It neither adds extra computational cost nor disrupts the original parallel training characteristics. 
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">Scaling</h2>
+                <p>We analyze the impact of scaling the vocabulary size under consistent training hyperparameters throughout. 
+                    Vocabulary size V<sub>d</sub> = 2<sup>16</sup> converges faster and achieves better results for small models (125M and 361M parameters). 
+                    As we scale up the model size to 2.2B, Infinity with a vocabulary size V<sub>d</sub> = 2<sup>32</sup> beats that 
+                    one with V<sub>d</sub> = 2<sup>16</sup>. Experiment with 5M high-quality image-text pair data under 256 × 256 resolution.
+                </p>
+                <img loading="lazy" width='80%' src="static/images/method/scaling_vocabulary.png" alt="efficiency" />
+
+                <p>We analyze the impact of scaling model size under consistent training hyperparameters throughout 
+                    Experiment with 10M pre-training data and 256 × 256 resolution. Validation loss smoothly decreases as a function 
+                    of the model size and training iterations. Besides, Validation loss is a strong predictor of overall model performance. 
+                    There is a strong correlation between validation loss and holistic image evaluation metrics.
+                </p>
+                <img loading="lazy" width='80%' src="static/images/method/scaling_models.png" alt="efficiency" />
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">Results</h2>
+                <p>On GenEval, our model with a re-writer achieves the best overall score of 0.73. Besides, Infinity also 
+                    reaches the highest position reasoning score of 0.49. On DPG. Our model reaches an overall score of 83.46, 
+                    surpassing SDXL, Playground v2.5, and DALLE 3. What’s more, Infinity achieves the best relation 
+                    score of 90.76 among all open-source T2I models, demonstrating its stronger ability to generate spatially 
+                    consistent images based on user prompts.
+                </p>
+                <img loading="lazy" width='70%' height='50%' src="static/images/method/table1.png" alt="huawei" />
+                <p>Tab.2 lists the results of two human preference benchmarks, i.e., ImageReward [71] and HPSv2.1 [69]. Infinity reaches the highest ImageReward and HPSv2.1, indicating our method could generate images that are more appealing to humans.
+                </p>
+
+                <img loading="lazy" width='89%' height='50%' src="static/images/method/table2.png" alt="huawei" />`
+
+                <p>
+                    Inference Latency. Infinity demonstrates a significant advantage in generation speed 
+                    compared to diffusion models at around 2 billion parameters. Furthermore, our tests reveal that the speed 
+                    advantage of Infinity becomes more substantial as the model size increases. Infinity achieves 7× faster 
+                    inference latency compared to SD3.5 at the same 8 billion parameters.
+                </p>
+                
+                <!-- <img loading="lazy" src="static/images/controlnet/controlnet_iclr.svg" alt="iclr" /> -->
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">More Samples</h2>
+
+                
+                <div class="easycard-container" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="easycard" style="padding-top: 100%;">
+                        <div class="easyimage-wrapper" style="height: 80%;">
+                            <img src="static/images/more_samples/图片13.png" alt="1:1比例">
+                        </div>
+                        <div class="easycaption" style="font-size: 0.6rem;">A portrait photo of a kangaroo wearing an orange hoodie and blue sunglasses standing on the grass in front of the Sydney Opera House holding a sign on the chest with the text 'Welcome Friends!'</div>
+                    </div>
+                    <div class="easycard" style="padding-top: 100%;">
+                        <div class="easyimage-wrapper" style="height: 80%;">
+                            <img src="static/images/more_samples/图片14.png" alt="1:1比例">
+                        </div>
+                        <div class="easycaption" style="font-size: 0.6rem;">Create an image with the text 'Stay Positive' in an uplifting style, featuring bright and cheerful colors, swirling floral patterns, and a radiant sun in the background.
+                        </div>
+                    </div>
+                    <div class="easycard" style="padding-top: 100%;">
+                        <div class="easyimage-wrapper" style="height: 80%;">
+                            <img src="static/images/more_samples/图片15.png" alt="1:1比例">
+                        </div>
+                        <div class="easycaption" style="font-size: 0.6rem;">Render the text 'Welcome to the Future' with a vibrant neon effect, set against a backdrop of a futuristic cityscape at night, filled with towering skyscrapers, cars, and holographic advertisements.
+                        </div>
+                    </div>
+                    <div class="easycard" style="padding-top: 100%;">
+                        <div class="easyimage-wrapper" style="height: 80%;">
+                            <img src="static/images/more_samples/图片16.png" alt="1:1比例">
+                        </div>
+                        <div class="easycaption" style="font-size: 0.6rem;">A snowy village scene with cozy cottages covered in snow, twinkling lights in the windows, smoke rising from chimneys, snow-covered trees, and children playing in the snow. The text 'Winter Wonderland' is written prominently in the snow in front of the village, as if carefully crafted by a child.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code>@misc{han2024infinityscalingbitwiseautoregressive,
+    title={Infinity: Scaling Bitwise AutoRegressive Modeling for High-Resolution Image Synthesis}, 
+    author={Jian Han and Jinlai Liu and Yi Jiang and Bin Yan and Yuqi Zhang and Zehuan Yuan and Bingyue Peng and Xiaobing Liu},
+    year={2024},
+    eprint={2412.04431},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV},
+    url={https://arxiv.org/abs/2412.04431}, 
+}</code></pre>
+        </div>
+    </section>
+    <!--End BibTex citation -->
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This page was built using the <a
+                                href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+                            You are free to borrow the of this website, we just ask that you link back to this page in
+                            the footer. <br> This website is licensed under a <a rel="license"
+                                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                                Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <p class="has-text-centered">Total clicks: <span id="busuanzi_value_site_pv"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Statcounter tracking code -->
+
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+</body>
+
+</html>

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5; /* Adjust this value to make the spacing larger */
+            margin: 0;
+            padding: 0;
+            color: black;
+            background-image: url('asset/samples/pexels-photo-28821825.jpeg'); /* Background image */
+            background-size: contain; /* Cover the entire viewport */
+            background-attachment: fixed; /* Fixed background */
+            background-position: center;
+            direction: ltr;
+        }
+        .hero {
+            text-align: center;
+            padding: 50px 0;
+            background-color: #fff;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        .hero h1 {
+            font-size: 5em;
+            margin: 0.2em 0;
+        }
+        .hero h2 {
+            font-size: 2.8em;
+            margin: 0.2em 0;
+            font-weight: normal;
+            line-height: 1.4; /* Adjust this value to make the spacing larger */
+        }
+        .hero p {
+            font-size: 1.4em;
+            margin-bottom: 1em;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 0.9em;
+            color: white;
+            background-color: black;
+            border-radius: 30px;
+            text-decoration: none;
+        }
+        .gallery-container {
+            max-width: 77%; /* Limit the width of the gallery */
+            margin: 0 auto; /* Center the gallery */
+            padding: 20px 0; /* Add some padding on top and bottom */
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(24, 1fr); /* 12 columns grid */
+            grid-auto-rows: 150px; /* Adjust row height */
+            gap: 10px;
+        }
+        .gallery-item {
+            overflow: hidden;
+            /*aspect-ratio: 1/1; !* Keep the aspect ratio of the images *!*/
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer; /* Cursor change on hover */
+            border-radius: 10px; /* Rounded corners */
+            transition: transform 0.3s ease; /* Add smooth transition */
+        }
+        /* Image scaling on hover */
+        .gallery-item img:hover {
+            transform: scale(1.2); /* Scale the image to 1.2 times its original size */
+        }
+        /* Define specific grid item placements */
+        .item1 { grid-column: span 5; grid-row: span 8; } /* Large image */
+        .item2 { grid-column: span 9; grid-row: span 2; } /* Smaller image */
+        .item3 { grid-column: span 6; grid-row: span 2; } /* Horizontal image */
+        .item4 { grid-column: span 4; grid-row: span 4; } /* Wide image */
+        .item5 { grid-column: span 4; grid-row: span 4; } /* Wide image */
+        .item6 { grid-column: span 5; grid-row: span 2; } /* Wide image */
+        .item7 { grid-column: span 6; grid-row: span 2; } /* Square image */
+        .item8 { grid-column: span 5; grid-row: span 2; } /* Vertical image */
+        .item9 { grid-column: span 6; grid-row: span 2; } /* Vertical image */
+
+
+        .item10 { grid-column: span 4; grid-row: span 4; } /* Another larger image */
+        .item11 { grid-column: span 4; grid-row: span 2; } /* Another larger image */
+        .item12 { grid-column: span 6; grid-row: span 2; } /* Another larger image */
+        .item13 { grid-column: span 5; grid-row: span 2; } /* Another larger image */
+
+        .item14 { grid-column: span 4; grid-row: span 3; } /* Another larger image */
+
+        .item15 { grid-column: span 4; grid-row: span 4; } /* Another larger image */
+        .item16 { grid-column: span 4; grid-row: span 4; } /* Another larger image */
+        .item17 { grid-column: span 2; grid-row: span 4; } /* Another larger image */
+        .item18 { grid-column: span 2; grid-row: span 4; } /* Another larger image */
+
+        /* Modal styling */
+        #modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
+            justify-content: center; /* Horizontally center the image */
+            flex-direction: column;
+            align-items: center; /* Center align items vertically */
+        }
+        #modal img {
+            margin: auto;
+            display: block;
+            max-width: 77%;
+            max-height: 77%; /* Ensure the image doesn't overflow vertically */
+            object-fit: contain; /* Make sure the aspect ratio is preserved */
+        }
+        #modal-description {
+            color: white;
+            text-align: center;
+            margin-top: 10px; /* Adjust this value to move text closer to the image */
+            font-size: 1.2em;
+        }
+        .description {
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-size: 17px;
+            line-height: 1.47;
+            color: #333;
+            /*color: black; !* Text color *!*/
+            letter-spacing: -0.022em;
+            font-weight: 400;
+            background-color: #fff; /* Solid background color that spans the entire width */
+            padding: 20px 0; /* Add vertical padding */
+            text-align: center; /* Center align text */
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            box-shadow: 2px 4px 12px #00000054;
+        }
+        .description_noborder {
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-size: 17px;
+            line-height: 1.47;
+            color: #333;
+            /*color: black; !* Text color *!*/
+            letter-spacing: -0.022em;
+            font-weight: 400;
+            background-color: #fff; /* Solid background color that spans the entire width */
+            padding: 20px 0; /* Add vertical padding */
+            text-align: center; /* Center align text */
+        }
+        .description-content {
+            /*background-color: rgba(255, 255, 255, 0.1); !* Semi-transparent background inside the section *!*/
+            /*border: 2px solid #555; !* Adding a lighter border *!*/
+            max-width: 65%; /* Limit the width to 80% of the screen */
+            margin: 0 auto; /* Center the content horizontally */
+            padding: 20px; /* Padding inside the border */
+            font-style: normal;
+            border-radius: 18px;
+            /*box-shadow: 2px 4px 12px #00000014;*/
+        }
+        .description-content h2 {
+            display: block;
+            color: black;
+            font-size: 1.5em;
+            line-height: 1.125;
+            letter-spacing: .004em;
+            font-weight: 600;
+            text-align: left; /* Center-align the h2 */
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-style: normal;
+        }
+        .description-content p {
+            font-size: 1.1em;
+            text-align: justify; /* Left-align the p */
+            font-weight: normal;
+        }
+        .citation {
+            /*background-color: #333; !* Solid background color that spans the entire width *!*/
+            font-family: Arial, sans-serif;
+            background-color: #fff; /* Solid background color that spans the entire width */
+            color: black;
+            padding: 10px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .citation-content {
+            text-align: left;
+            border-radius: 15px; /* Rounded corners */
+            font-size: 0.8em;
+            max-width: 80%; /* Limit the width to 80% of the screen */
+            margin: 0 auto; /* Center the content horizontally */
+            margin-top: -30px;
+            padding: 0; /* Padding inside the border */
+            background-color: #f5f5f5; /* Semi-transparent background inside the section */
+            overflow-x: auto; /* Horizontal scrolling */
+            overflow-y: hidden; /* Prevent vertical scrolling */
+            white-space: nowrap; /* Prevent line breaks */
+        }
+        .citation-content h2 {
+            font-size: 2em;
+            text-align: left;
+            font-weight: normal;
+        }
+        .citation pre {
+            border-radius: 15px; /* Rounded corners */
+            max-width: 90%; /* Limit the width to 80% of the screen */
+            text-align: left;
+        }
+        .footer {
+            background-color: #f5f5f5;
+            box-shadow: 2px 4px 12px #00000054;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            margin-top: -20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        .footer a {
+            color: dodgerblue;
+            text-decoration: none;
+        }
+        .inserted-image {
+            max-width: 80%;  /* Set the maximum width for the image */
+            height: auto;    /* Ensure the height adjusts automatically to maintain aspect ratio */
+            margin: 30px;  /* Add space above and below the image */
+            margin-top: 10px;
+            display: block;  /* Make sure the image is treated as a block-level element */
+            margin-left: auto; /* Center the image horizontally */
+            margin-right: auto;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px 3px #00000030;
+        }
+        .inserted-image-noshadow {
+            max-width: 30%;  /* Set the maximum width for the image */
+            margin-left: auto; /* Center the image horizontally */
+            margin-right: auto;
+            border-radius: 10px;
+        }
+        .video-container {
+            text-align: center;  /* Center the video horizontally */
+            margin: 20px 0;  /* Add some vertical margin around the video */
+        }
+        video {
+            max-width: 80%;  /* The video will scale to fit the container */
+            height: auto;  /* Maintain the video's aspect ratio */
+            border-radius: 10px;  /* Rounded corners for the video */
+            box-shadow: 2px 2px 10px 3px #00000054;
+        }
+        .logo {
+            color: black;
+            display: flex;
+            justify-content: center;
+            /*justify-content: left;*/
+            align-items: center;
+            text-align: center;
+            gap: 60px;
+        }
+        .logo-sup {
+            position: absolute;
+            top: -5px; /* Adjust this value to position it closer to the top */
+            right: -10px; /* Adjust this value to move it horizontally */
+            font-size: 14px; /* Increase the size of the superscript */
+            color: black; /* Change the color if needed */
+          }
+        /* Image comparison container */
+        .image-comparison-container {
+            background-color: #fff; /* Solid background color that spans the entire width */
+        }
+        .image-comparison-content {
+            position: relative;
+            width: 580px;  /* Adjust the width as needed */
+            height: 402px; /* Adjust the height as needed */
+            overflow: hidden; /* Make sure overflow isn't hiding any part of the images */
+            margin: 0 auto;
+            margin-top: -20px;
+            cursor: ew-resize;
+            border-radius: 10px;
+        }
+        .image-comparison-content img {
+            position: absolute;
+            width: 100%;
+            height: 99%;
+            background-color: #fff;
+            object-fit: contain; /* Use contain to ensure the whole image is visible */
+        }
+        .image-comparison-content .slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: #fff;
+            z-index: 10;
+        }
+        .image-comparison-content .slider-black {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: black;
+            z-index: 10;
+        }
+        .demo {
+            margin-top: -20px;
+            background-color: #fff;
+            text-align: center;
+        }
+        .demo iframe {
+            width: 50%;
+        }
+        .image-comparison-content .image-2 {
+            clip-path: inset(0 0 0 50%);
+        }
+        .image-comparison-content .image-4 {
+            clip-path: inset(0 0 0 50%);
+        }
+        @media (max-width: 4096px) {
+            .gallery {
+                /*grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); !* Adjust columns for smaller screens *!*/
+                grid-auto-columns: 100px; /* Adjust columns for smaller screens */
+                grid-auto-rows: 200px; /* Set a fixed height for the grid items */
+            }
+            .demo iframe {
+                width: 800px;
+            }
+        }
+        @media (max-width: 2048px) {
+            .gallery {
+                /*grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); !* Adjust columns for smaller screens *!*/
+                grid-auto-columns: 60px; /* Adjust columns for smaller screens */
+                grid-auto-rows: 90px; /* Set a fixed height for the grid items */
+            }
+            .demo iframe {
+                width: 800px;
+            }
+        }
+        @media (min-width: 2048px) {
+            .description-content {
+                max-width: 728px; /* Limit the width to 80% of the screen */
+                padding: 10px; /* Padding inside the border */
+            }
+            .citation-content {
+                max-width: 728px; /* Limit the width to 80% of the screen */
+                padding: 10px; /* Padding inside the border */
+            }
+            .inserted-image {
+                max-width: 1024px; /* Limit the width to 80% of the screen */
+                padding: 10px; /* Padding inside the border */
+            }
+            .inserted-image-noshadow {
+                max-width: 384px; /* Limit the width to 80% of the screen */
+            }
+            video {
+                max-width: 1024px;  /* The video will scale to fit the container */
+            }
+        }
+        @media (max-width: 1024px) {
+            .gallery {
+                /*grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); !* Adjust columns for smaller screens *!*/
+                grid-auto-columns: 40px; /* Adjust columns for smaller screens */
+                grid-auto-rows: 70px; /* Set a fixed height for the grid items */
+            }
+            .demo iframe {
+                width: 80%;
+            }
+        }
+        @media (min-width: 1024px) {
+            .description-content {
+                max-width: 728px; /* Limit the width to 80% of the screen */
+                padding: 10px; /* Padding inside the border */
+            }
+            .citation-content {
+                max-width: 728px; /* Limit the width to 80% of the screen */
+                padding: 10px; /* Padding inside the border */
+            }
+            .inserted-image {
+                max-width: 826px; /* Limit the width to 80% of the screen */
+                padding: 5px; /* Padding inside the border */
+            }
+            .inserted-image-noshadow {
+                max-width: 384px; /* Limit the width to 80% of the screen */
+            }
+            video {
+                max-width: 728px;  /* The video will scale to fit the container */
+            }
+        }
+        @media (max-width: 768px) {
+            .gallery {
+                /*grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); !* Adjust columns for smaller screens *!*/
+                grid-auto-columns: 20px; /* Adjust columns for smaller screens */
+                grid-auto-rows: 30px; /* Set a fixed height for the grid items */
+                gap: 5px;
+            }
+            .gallery-container {
+                max-width: 85%; /* Limit the width of the gallery */
+                padding: 10px 0; /* Add some padding on top and bottom */
+            }
+            .hero h1 {
+                font-size: 3em;
+            }
+            .hero h2 {
+                font-size: 2em;
+            }
+            .hero p {
+                font-size: 1em;
+            }
+            .description-content {
+                max-width: 92%; /* Limit the width to 80% of the screen */
+                padding: 10px; /* Padding inside the border */
+            }
+            .citation-content {
+                max-width: 92%; /* Limit the width to 80% of the screen */
+                padding: 10px; /* Padding inside the border */
+            }
+            .inserted-image {
+                max-width: 95%; /* Limit the width to 80% of the screen */
+                padding: 5px; /* Padding inside the border */
+            }
+            .inserted-image-noshadow {
+                max-width: 50%; /* Limit the width to 80% of the screen */
+                margin-left: auto; /* Center the image horizontally */
+                margin-right: auto;
+            }
+            .image-comparison-content {
+                max-height: 300px; /* Limit the width to 80% of the screen */
+                max-width: 92%;
+            }
+            video {
+                max-width: 92%;  /* The video will scale to fit the container */
+            }
+            .logo {
+                gap: 10px;
+            }
+            .demo iframe {
+                width: 95%;
+            }
+        }
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            .description {
+                background-color: #333; /* Dark color for dark mode */
+                color: white; /* Light text color for dark mode */
+            }
+            .description_noborder {
+                background-color: #333; /* Dark color for dark mode */
+                color: white; /* Light text color for dark mode */
+            }
+            .description_noborder h2{
+                background-color: #333; /* Dark color for dark mode */
+                color: white; /* Light text color for dark mode */
+            }
+            .description-content h2 {
+                background-color: #333; /* Dark color for dark mode */
+                color: white; /* Light text color for dark mode */
+            }
+            .citation {
+                background-color: #333; /* Dark color for dark mode */
+                color: white; /* Light text color for dark mode */
+            }
+            .citation-content {
+                background-color: #555; /* Dark color for dark mode */
+            }
+            .citation-content h2 {
+                background-color: #555; /* Dark color for dark mode */
+            }
+            .footer {
+                background-color: #222; /* Dark color for dark mode */
+                color: white;
+            }
+            .image-comparison-container {
+                background-color: #333; /* Dark color for dark mode */
+            }
+            .demo {
+                background-color: #333;
+            }
+        }
+    </style>
+</head>
+<body data-new-gr-c-s-check-loaded="14.1211.0" data-gr-ext-installed="">
+    <div class="hero">
+        <div style="display: flex; justify-content: center; align-items: center; margin-left: -40px;">
+            <h1 style="margin: 0;">Infinity&infin;</h1>
+        </div>
+        <h2>Scaling Bitwise AutoRegressive Modeling <br>
+            for High-Resolution Image Synthesis</h2>
+        <!-- <p>Exploring the Frontiers of Efficient Generative Foundation Models</p> -->
+
+        <!-- Add author and institution information -->
+        <div style="margin-top: 20px; text-align: center;">
+            <p style="font-size: 1.3em; margin-bottom: 5px;">
+                <a href="https://scholar.google.com/citations?user=H2DhYDoAAAAJ&hl=en&oi=sra" target="_blank" style="color: #76b900;">Jian Han</a><sup>*</sup>,
+                <a href="https://scholar.google.com.hk/citations?user=PUI417QAAAAJ&hl=zh-CN&oi=ao" target="_blank" style="color: #76b900;">Jinlai Liu</a><sup>*</sup>,
+                <a href="https://enjoyyi.github.io" target="_blank" style="color: #76b900;">Yi Jiang</a><sup>*</sup>,
+                <a href="https://masterbin-iiau.github.io" target="_blank" style="color: #76b900;">Bin Yan</a>,<br>
+                <a href="mailto:zhangyuqi.hi@bytedance.com" target="_blank" style="color: #76b900;">Yuqi Zhang</a>,
+                <a href="https://shallowyuan.github.io/" target="_blank" style="color: #76b900;">Zehuan Yuan</a><sup>†</sup>,
+                <a href="mailto:bingyue.peng@bytedance.com" target="_blank" style="color: #76b900;">Bingyue Peng</a>,
+                <a href="mailto:will.liu@bytedance.com" target="_blank" style="color: #76b900;">Xiaobing Liu</a>,
+            </p>
+            <p style="font-size: 1.2em; color: #888;">
+                <!-- ByteDance -->
+                <sup>*</sup>Equal contribution.
+                <sup>†</sup>Corresponding author.
+            </p>
+        </div>
+<!--        <div style="overflow: hidden; background-color: #6699cc;">-->
+        <div style="overflow: hidden; background-color: #fff;">
+          <div class="logo" style="padding: 12px;">
+            <a href="https://www.bytedance.com/en/" style="text-decoration: none; font-size: 16px;">
+              <img src="static/images/more_samples/ByteDance_logo_English.svg" alt="bytedance Logo" style="width: auto; height: 30px;">
+            </a>
+          </div>
+        </div>
+
+        <a href="https://arxiv.org/abs/2412.04431" class="button">Paper</a>
+        <a href="https://github.com/FoundationVision/Infinity" class="button">Code</a>
+    </div>
+
+    <div class="gallery-container">
+        <section class="gallery" id="gallery">
+        <div class="gallery-item item1"><img src="static/images/more_samples/图片1.png" alt="Image 1" data-description=""></div>
+        <div class="gallery-item item2"><img src="static/images/more_samples/图片2.png" alt="Image 2" data-description="i, photo, typography, 3d render"></div>
+        <div class="gallery-item item3"><img src="static/images/more_samples/图片3.png" alt="Image 2" data-description="tters is whitesand made, vibrant, graffiti, photo, typography, 3d render"></div>
+        <div class="gallery-item item4"><img src="static/images/more_samples/图片4.png" alt="Image 4" data-description="make me a logo that says &quot;So Fast&quot;  with a really cool flying dragon shape with lightning sparks all over the sides and all of it contains Indonesian language"></div>
+        <div class="gallery-item item5"><img src="static/images/more_samples/图片5.png" alt="Image 4" data-description="make me a logo that says &quot;So Fast&quot;  with a really cool flying dragon shape with lightning sparks all over the sides and all of it contains Indonesian language"></div>
+        <div class="gallery-item item6"><img src="static/images/more_samples/图片6.png" alt="Image 10" data-description="a photo of a realistic cat that wears a taewondo uniform, chest protection gear and a helmet is kicking his leg high in a match in a stadium. Cinematic shot."></div>
+        <div class="gallery-item item7"><img src="static/images/more_samples/图片7.png" alt="Image 7" data-description="A alpaca made of colorful building blocks, cyberpunk."></div>
+        <div class="gallery-item item8"><img src="static/images/more_samples/图片8.png" alt="Image 8" data-description="portrait of a man with bat robotic head ,wearing Louis Vuitton , horror"></div>
+        <div class="gallery-item item9"><img src="static/images/more_samples/scene_real.png" alt="Image 9" data-description="a more or less distant girl, the sunsets over a large beach, clear sky, in the style of experimental film, desert wave, 35mm film, doug aitken, light black and light aquamarine, colorful melancholy, ed mell"></div>
+        <div class="gallery-item item10"><img src="static/images/more_samples/图片9.png" alt="Image 10" data-description="drone photography of the sea"></div>
+        <div class="gallery-item item11"><img src="static/images/more_samples/图片11.png" alt="Image 11" data-description="a stunning and luxurious bedroom carved into a rocky mountainside seamlessly blending nature with modern design with a plush earth-toned bed textured stone walls circular fireplace massive uniquely shaped window framing snow-capped mountains dense forests, tranquil mountain retreat offering breathtaking views of alpine landscape wooden floors soft rugs rustic sophisticated charm, cozy tranquil peaceful relaxing perfect escape unwind connect with nature, soothing intimate elegance modern design raw beauty of nature harmonious blend captivating view enchanting inviting space, soft ambient lighting warm hues indirect lighting natural daylight balanced inviting glow"></div>
+        <div class="gallery-item item12"><img src="static/images/more_samples/图片12.png" alt="Image 12" data-description="Astronaut in a jungle, cold color palette, muted colors, detailed, 8k"></div>
+        <div class="gallery-item item13"><img src="static/images/more_samples/图片13.png" alt="Image 12" data-description="Astronaut in a jungle, cold color palette, muted colors, detailed, 8k"></div>
+
+
+        <!-- <div class="gallery-item item5"><img src="static/images/carousel/图片5.png" alt="Image 5" data-description="portrait photo of a girl, photograph, highly detailed face, depth of field"></div>
+        <div class="gallery-item item6"><img src="static/images/carousel/图片6.png" alt="Image 10" data-description="a photo of a realistic cat that wears a taewondo uniform, chest protection gear and a helmet is kicking his leg high in a match in a stadium. Cinematic shot."></div>
+
+        <div class="gallery-item item7"><img src="static/images/carousel/图片7.png" alt="Image 7" data-description="A alpaca made of colorful building blocks, cyberpunk."></div>
+        <div class="gallery-item item8"><img src="static/images/carousel/图片8.png" alt="Image 8" data-description="portrait of a man with bat robotic head ,wearing Louis Vuitton , horror"></div>
+        <div class="gallery-item item9"><img src="static/images/carousel/图片9.png" alt="Image 9" data-description="a more or less distant girl, the sunsets over a large beach, clear sky, in the style of experimental film, desert wave, 35mm film, doug aitken, light black and light aquamarine, colorful melancholy, ed mell"></div>
+        <div class="gallery-item item10"><img src="static/images/carousel/图片10.png" alt="Image 10" data-description="drone photography of the sea"></div>
+
+        <div class="gallery-item item11"><img src="static/images/carousel/图片11.png" alt="Image 11" data-description="a stunning and luxurious bedroom carved into a rocky mountainside seamlessly blending nature with modern design with a plush earth-toned bed textured stone walls circular fireplace massive uniquely shaped window framing snow-capped mountains dense forests, tranquil mountain retreat offering breathtaking views of alpine landscape wooden floors soft rugs rustic sophisticated charm, cozy tranquil peaceful relaxing perfect escape unwind connect with nature, soothing intimate elegance modern design raw beauty of nature harmonious blend captivating view enchanting inviting space, soft ambient lighting warm hues indirect lighting natural daylight balanced inviting glow"></div>
+        <div class="gallery-item item12"><img src="static/images/carousel/图片12.png" alt="Image 12" data-description="Astronaut in a jungle, cold color palette, muted colors, detailed, 8k"></div>
+        <div class="gallery-item item13"><img src="static/images/carousel/图片1.png" alt="Image 13" data-description="A vintage photograph of the old sailing yacht &quot;Shamrock&quot; with its long, white sails billowing in the wind as it floats on calm waters against an overcast sky. The photo captures the classic design and elegance of traditional racing yachts from early last century."></div>
+        <div class="gallery-item item14"><img src="static/images/carousel/图片1.png" alt="Image 14" data-description="a blue Porsche 356 parked in front of a yellow brick wall."></div>
+
+        <div class="gallery-item item15"><img src="static/images/carousel/图片1.png" alt="Image 15" data-description="smiling cartoon dog sits at a table, coffee mug on hand, as a room goes up in flames. &quot;Help&quot; the dog is yelling"></div>
+        <div class="gallery-item item16"><img src="static/images/carousel/图片1.png" alt="Image 16" data-description="Self-portrait oil painting, a beautiful cyborg with golden hair, 8k"></div>
+        <div class="gallery-item item17"><img src="static/images/carousel/图片1.png" alt="Image 17" data-description="Pirate ship trapped in a cosmic maelstrom nebula, rendered in cosmic beach whirlpool engine, volumetric lighting, spectacular, ambient lights, light pollution, cinematic atmosphere, art nouveau style, illustration art artwork by SenseiJaye, intricate detail."></div>
+        <div class="gallery-item item18"><img src="static/images/carousel/图片1.png" alt="Image 18" data-description="photograph of a stunt man walking while on fire dressed as an American politician, 35mm film still from movie directed in the style of Quentin Tarantino"></div> -->
+
+        </section>
+    </div>
+
+
+    <section class="description">
+        <div class="description-content">
+          <h2>About Infinity</h2>
+          <p>
+            We present Infinity, a <strong style="font-size: 18px;">Bitwise Visual AutoRegressive Modeling</strong> capable of generating high-resolution, photorealistic 
+            images following language instruction. Infinity redefines visual autoregressive model under a bitwise token prediction 
+            framework with an infinite-vocabulary tokenizer & classifier and bitwise self-correction mechanism, remarkably improving
+            the generation capacity and details. By theoretically scaling the tokenizer vocabulary size to infinity and concurrently
+            scaling the transformer size, our method significantly unleashes powerful scaling capabilities compared to vanilla VAR.
+            Infinity sets a new record for autoregressive text-to-image models, outperforming top-tier diffusion models like SD3-Medium
+            and SDXL. Notably, Infinity surpasses SD3-Medium by <strong style="font-size: 18px;">improving the GenEval benchmark score from 0.62 to 0.73 and the 
+                ImageReward benchmark score from 0.87 to 0.96, achieving a win rate of 66%.</strong>Without extra optimization, Infinity 
+            generates a high-quality <strong style="font-size: 18px;">1024x1024</strong> image in <strong style="font-size: 18px;">0.8</strong> seconds, making it 2.6x faster than SD3-Medium and establishing
+            it as the fastest text-to-image model. Models and codes will be released to promote further exploration of Infinity
+            for visual generation and unified tokenizer modeling.
+          </p>
+
+        <div>
+            <img src="static/images/method/framework_row.png" width='100%' alt="pipeline for Infinity" class="inserted-image">
+        </div>
+
+        <div class="description-content">
+          <h2>Several Core Design Details for Infinity</h2>
+          <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;  <strong style="font-size: 18px;">Pipeline: </strong>
+              Infinity introduces bitwise modeling, which incorporates a bitwise multi-scale visual tokenizer, 
+            Infinite-Vocabulary Classifier (IVC), and Bitwise Self-Correction. When predicting R<sub>k</sub>, 
+            the sequence (R<sub>1</sub>, R<sub>2</sub>, ..., R<sub>k-1</sub>) serves as the prefixed context and the text condition guides the prediction through 
+            a cross attention mechanism. Different from VAR, Infinity performs next-scale prediction with bit labels.<br>
+          </p>
+          <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;  <strong style="font-size: 18px;">Bitwise Visual Tokenizer: </strong>
+            Increasing the vocabulary size has significant potential for improving reconstruction and generation quality. 
+            However, directly enlarging the vocabulary in existing tokenizers leads to a substantial increase 
+            in memory consumption and computational burden. To address these challenges and fully exploit the potential
+            of discrete tokenizers, this paper proposes a new bitwise multi-scale residual quantizer, which significantly
+            reduces memory usage, enabling the training of extremely large vocabulary, e.g. V<sub>d</sub> = 2<sup>32</sup> or V<sub>d</sub> = 2<sup>64</sup>.
+        </p>
+        </div>
+    </section>
+
+    <section class="image-comparison-container">
+        <div class="image-comparison-content">
+            <img src="static/images/16_vae.png" alt="Image 1" class="image-1">
+            <img src="static/images/32_vae.png" alt="Image 2" class="image-2">
+            <div class="slider"></div>
+        </div>
+    </section>
+
+    <section class="description_noborder">
+
+    <div class="description-content">
+        </div>
+
+
+        <div class="description-content">
+          <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp; <strong style="font-size: 18px;">Infinite-Vocabulary Classifier: </strong>
+              Visual tokenizer quantizes continuous features and then gets index labels. Conventional classifier (left) predicts 2<sup>d</sup> indices. 
+                    Infinite-Vocabulary Classifier (right) predicts d bits instead. Slight perturbations to near-zero values in continuous features 
+                    cause a complete change of index labels. Bit labels (i.e. quantized features) change subtly and still provide steady supervision. 
+                    Besides, parameters of conventional classifiers grow exponentially as d increases, while IVC grows linearly. If d = 32 and h = 2048, 
+                    the conventional classifier requires 8.8 trillion parameters, exceeding current compute limits. By contrast, IVC only requires 0.13M 
+                    parameters.<br>
+                </p>
+        </div>
+
+        <div>
+            <img src="static/images/method/ivc.png" width='40%' alt="pipeline for Infinity" class="inserted-image">
+        </div>
+
+        <div class="description-content">
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp; <strong style="font-size: 18px;">Bitwise Self-Correction: </strong>
+                VAR inherits the teacher-forcing training from LLMs. We find that the teacher-forcing training brings about severe train-test discrepancy 
+                for visual generation. In particular, the teacher-forcing training makes the transformer only refine features in each scale 
+                without the ability to recognize and correct mistakes. Mistakes made in former scales will be propagated and amplified in latter 
+                scales, finally messing up generated images. In this work, we propose Bitwise Self-Correction (BSC) 
+                to address this issue. In particular, we randomly flip the bits in R<sub>k</sub> with a probability uniformly 
+                sampled from [0, p], imitating different strengths of errors made in the prediction of the k-th scale. After replacing R<sub>k</sub> with 
+                a flipped one as predictions, we recompute the transformer input. Besides, re-quantization is performed to get a new target R<sub>k+1</sub>. 
+                We also provide a simplified illustration in the below figure for better understanding. Notably, BSC is accomplished by revising the inputs 
+                and labels of the transformer. It neither adds extra computational cost nor disrupts the original parallel training characteristics. <br>
+            </p>
+
+        </div>
+  
+
+
+        <div>
+            <img src="static/images/method/bsc.png" width='20%' alt="pipeline for Infinity" class="inserted-image">
+        </div>
+
+        <div class="description-content">
+          <h2>Overall Performance</h2>
+            <p>On GenEval, our model with a re-writer achieves the best overall score of 0.73. Besides, Infinity also 
+                reaches the highest position reasoning score of 0.49. On DPG. Our model reaches an overall score of 83.46, 
+                surpassing SDXL, Playground v2.5, and DALLE 3. What’s more, Infinity achieves the best relation 
+                score of 90.76 among all open-source T2I models, demonstrating its stronger ability to generate spatially 
+                consistent images based on user prompts.</p>
+        </div>
+
+        <div>
+            <img src="static/images/method/table1.png" alt="Infinity performance" class="inserted-image">
+        </div>
+
+        <div class="description-content">
+            <h2>Human Preference Benchmarks</h2>
+              <p>Tab.2 lists the results of two human preference benchmarks, i.e., ImageReward and HPSv2.1. 
+                Infinity reaches the highest ImageReward and HPSv2.1, indicating our method could generate images that 
+                are more appealing to humans.</p>
+          </div>
+  
+          <div>
+              <img src="static/images/method/table2.png" alt="Infinity performance" class="inserted-image">
+          </div>
+
+        <div class="description-content">
+        <h2>Inference Latency</h2>
+            <p>As in Tab.2, Infinity demonstrates a significant advantage in generation speed 
+                compared to diffusion models at around 2 billion parameters (2.6× speedup to SD3-Medium). Furthermore, our tests reveal that the speed 
+                advantage of Infinity becomes more substantial as the model size increases. Infinity achieves 7× faster 
+                inference latency compared to SD3.5 at the same 8 billion parameters.</p>
+        </div>
+
+        <div class="description-content">
+            <h2>Scaling Vocabulary</h2>
+              <p>We analyze the impact of scaling the vocabulary size under consistent training hyperparameters throughout. 
+                Vocabulary size V<sub>d</sub> = 2<sup>16</sup> converges faster and achieves better results for small models (125M and 361M parameters). 
+                As we scale up the model size to 2.2B, Infinity with a vocabulary size V<sub>d</sub> = 2<sup>32</sup> beats that 
+                one with V<sub>d</sub> = 2<sup>16</sup>. Experiment with 5M high-quality image-text pair data under 256 × 256 resolution.</p>
+          </div>
+  
+          <div>
+              <img src="static/images/method/scaling_vocabulary.png" alt="Infinity performance" class="inserted-image">
+          </div>
+
+          <div class="description-content">
+            <h2>Scaling Model Size</h2>
+              <p>We analyze the impact of scaling model size under consistent training hyperparameters throughout 
+                Experiment with 10M pre-training data and 256 × 256 resolution. Validation loss smoothly decreases as a function 
+                of the model size and training iterations. Besides, Validation loss is a strong predictor of overall model performance. 
+                There is a strong correlation between validation loss and holistic image evaluation metrics.</p>
+          </div>
+  
+          <div>
+              <img src="static/images/method/scaling_models.png" alt="Infinity performance" class="inserted-image">
+          </div>
+
+        <!--BibTex citation -->
+        <div class="description-content">
+            <h2 class="title">BibTeX</h2>
+        </div>
+        <section class="citation" id="BibTeX">
+            <div class="citation-content">
+                <pre><code>@misc{han2024infinityscalingbitwiseautoregressive,
+    title={Infinity: Scaling Bitwise AutoRegressive Modeling for High-Resolution Image Synthesis}, 
+    author={Jian Han and Jinlai Liu and Yi Jiang and Bin Yan and Yuqi Zhang and Zehuan Yuan and Bingyue Peng and Xiaobing Liu},
+    year={2024},
+    eprint={2412.04431},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV},
+    url={https://arxiv.org/abs/2412.04431}, 
+}</code></pre>
+            </div>
+        </section>
+
+    </section>
+    <!--End BibTex citation -->
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                                Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <span id="busuanzi_container_site_pv" style="display: inline;">Total clicks: <span id="busuanzi_value_site_pv"></span></span><p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <script>
+      // Function to open the modal and display the clicked image and description
+      function openModal(img) {
+          var modal = document.getElementById("modal");
+          var modalImg = document.getElementById("modal-img");
+          var modalDescription = document.getElementById("modal-description");
+
+          modal.style.display = "flex";
+          modalImg.src = img.src;
+          modalDescription.textContent = img.getAttribute('data-description'); // Get description from data-description attribute
+      }
+
+      // Add click event listeners to all images in the gallery with their descriptions
+      const images = document.querySelectorAll('.gallery-item img');
+      images.forEach((img) => {
+        img.addEventListener('click', () => openModal(img));
+      });
+    </script>
+
+    <script>
+        const container = document.querySelector('.image-comparison-content');
+        const slider = document.querySelector('.slider');
+        // const slider_black = document.querySelector('.slider-black');
+        const image2 = document.querySelector('.image-2');
+        // const image4 = document.querySelector('.image-4');
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            let xPos = e.clientX - rect.left;
+
+            if (xPos < 0) xPos = 0;
+            if (xPos > rect.width) xPos = rect.width;
+
+            const percentage = (xPos / rect.width) * 100;
+
+            slider.style.left = `${percentage}%`;
+            // slider_black.style.left = `${percentage}%`;
+            image2.style.clipPath = `inset(0 0 0 ${percentage}%)`;
+            // image4.style.clipPath = `inset(0 0 0 ${percentage}%)`;
+        });
+    </script>
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;limited&quot;,&quot;isActive&quot;:false,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>
